@@ -24,6 +24,7 @@ class TreeData(BaseModel):
     lng: float
     status: str
     user_uid: str 
+    cover_photo: str
 
 @app.get("/")
 def home():
@@ -40,8 +41,8 @@ def save_tree(tree: TreeData):
             
             # 2. Adicionamos a coluna user_uid no comando SQL
             query = text("""
-                INSERT INTO trees (common_name, scientific_name, status, user_uid, geom) 
-                VALUES (:cname, :sname, :status, :uid, ST_SetSRID(ST_MakePoint(:lng, :lat), 4326))
+                INSERT INTO trees (common_name, scientific_name, status, user_uid, cover_photo, geom) 
+                VALUES (:cname, :sname, :status, :uid, :photo, ST_SetSRID(ST_MakePoint(:lng, :lat), 4326))
             """)
             
             # 3. Enviamos o dado para o banco
@@ -50,6 +51,7 @@ def save_tree(tree: TreeData):
                 "sname": tree.scientific_name,
                 "status": tree.status,
                 "uid": tree.user_uid,
+                "photo": tree.cover_photo,
                 "lng": tree.lng,
                 "lat": tree.lat
             })
