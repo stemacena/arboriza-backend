@@ -42,7 +42,7 @@ def save_tree(tree: TreeData):
             # 🧠 INTELIGÊNCIA GEOGRÁFICA: Cruzando a árvore com o MapBiomas!
             # =================================================================
             bioma_query = text("""
-                SELECT classe, ano FROM mapbiomas_rio 
+                SELECT classe FROM mapbiomas_rio 
                 WHERE ST_Intersects(geom, ST_SetSRID(ST_MakePoint(:lng, :lat), 4326))
                 LIMIT 1
             """)
